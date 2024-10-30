@@ -1,0 +1,35 @@
+package KieRule
+
+import com.zero.drools.domain.entity.SystemUserEntity;
+import com.zero.drools.common.util.OutputDisplay;
+
+global OutputDisplay showResults;
+global OutputDisplay sh;
+
+rule "MASTERCARD"
+    when
+        userObject : SystemUserEntity(cardType == "MASTERCARD" && price > 10000)
+    then
+        userObject.setDiscount(10);
+        showResults.showText("showResults MASTERCARD has been added a discount");
+        sh.showText("sh MASTERCARD has been added a discount");
+
+end;
+
+rule "VISA"
+    when
+        userObject : SystemUserEntity(cardType == "VISA" && price > 5000)
+    then
+        userObject.setDiscount(14);
+        showResults.showText("showResults VISA has been added a discount");
+        sh.showText("sh VISA has been added a discount");
+end;
+
+rule "ICICI"
+    when
+        userObject : SystemUserEntity(cardType == "ICICI" && price > 7000)
+    then
+        sh.showText("sh ICICI has been added a discount");
+        userObject.setDiscount(20);
+        showResults.showText("showResults ICICI has been added a discount");
+end;
